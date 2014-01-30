@@ -1,0 +1,42 @@
+<h1>Listing Bobas</h1>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+
+
+<script type="text/javascript">
+$(function(){
+	handler = Gmaps.build('Google');
+	handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+		markers = handler.addMarkers([
+		{
+			"lat": 0,
+			"lng": 0,
+			"picture": {
+				"url": "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
+				"width":  36,
+				"height": 36
+			},
+			"infowindow": "hello!"
+		}
+		]);
+		handler.bounds.extendWith(markers);
+		handler.fitMapToBounds();
+	});
+	console.log(<%= raw @hash.to_json%>)
+	markers = handler.addMarkers(<%=raw @hash.to_json %>);
+})
+</script>
+
+<% @tapiocas.in_groups_of(3) do |group| %>
+  <div class="row">
+    <% group.compact.each do |tapioca| %>
+      <div class="span4">
+        <%= image_tag tapioca.picture_url, :width => '100%' if tapioca.picture.present?%>
+        <h4><%= link_to tapioca.name, tapioca %></h4>
+        <%= tapioca.description %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

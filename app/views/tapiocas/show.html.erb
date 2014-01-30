@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="span9">
+    <%= image_tag(@tapioca.picture_url, :width => "100%") if @tapioca.picture.present? %>
+    <h3>Comments</h3>
+<% @tapioca.comments.each do |comment| %>
+  <div>
+    <strong><%= comment.user_name %></strong>
+    <br />
+    <p><%= comment.body %></p>
+  </div>
+<% end %>
+<%= render 'comments/form' %>
+  </div>
+
+  <div class="span3">
+    <p><b>Name: </b><%= @tapioca.name %></p>
+    <p><b>Description: </b><%= @tapioca.description %></p>
+    <p>
+      <%= link_to 'Edit', edit_tapioca_path(@tapioca) %> |
+      <%= link_to 'Destroy', @tapioca, confirm: 'Are you sure?', method: :delete %> |
+      <%= link_to 'Back', tapiocas_path %>
+    </p>
+  </div>
+</div>
